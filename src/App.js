@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
-import { GlobalWrapper } from './components/styled-components';
-
+import { GlobalWrapper, RelativeWrapper } from './components/styled-components';
 
 class App extends Component {
   constructor(props) {
@@ -17,9 +16,13 @@ class App extends Component {
       isToggleStart: !prevState.isToggleStart,
     }));
   };
+
   render() {
     return (
       <GlobalWrapper>
+        <RelativeWrapper>
+          準備中...🍖
+        </RelativeWrapper>
       </GlobalWrapper>
     );
   }

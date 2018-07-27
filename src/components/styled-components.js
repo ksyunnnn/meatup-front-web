@@ -32,3 +32,11 @@ export const GlobalWrapper = styled.div`
     padding-bottom: 0;
   `};
 `;
+
+export const RelativeWrapper = styled.div`
+  position: relative;
+  width: 20%;
+  text-align: center;
+  top: 40%;
+  left: 40%;
+`;
