@@ -1,5 +1,5 @@
 export default {
-  red: '#B33D44',
-  redDark: '#7e001d',
-  redLight: '#ea6d6f',
+  oniku: '#B33D44',
+  onikuDark: '#7e001d',
+  onikuLight: '#ea6d6f',
 }
