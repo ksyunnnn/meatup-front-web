@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 
-import { GlobalWrapper, RelativeWrapper } from './components/styled-components';
+import { GlobalWrapper } from './components/styled-components';
+
+import NewEvent from './containers/NewEvent';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isToggleStart: true,
-    };
+    // this.state = {
+    //   event
+    // };
   }
 
   reactStart = () => {
@@ -20,9 +22,7 @@ class App extends Component {
   render() {
     return (
       <GlobalWrapper>
-        <RelativeWrapper>
-          準備中...🍖
-        </RelativeWrapper>
+        <NewEvent />
       </GlobalWrapper>
     );
   }
