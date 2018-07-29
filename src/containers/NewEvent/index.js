@@ -9,14 +9,17 @@ import {
 } from '../../components/styled-components';
 
 const NewEventName = props => (
-  <Input
-    name="name"
-    type="text"
-    value={props.newEvent.name}
-    onChange={props.handleChange}
-    placeholder="イベント名を設定"
-    autoFocus={true}
-  />
+  <Fragment>
+    <Input
+      name="name"
+      type="text"
+      value={props.newEvent.name}
+      onChange={props.handleChange}
+      placeholder="イベント名を設定"
+      autoFocus={true}
+    />
+    <SubmitButton active={props.newEvent.name.length > 0} type="submit" value="次へ" />
+  </Fragment>
 );
 
 const NewEventId = props => (
@@ -32,14 +35,16 @@ const NewEventId = props => (
       autoFocus={true}
       withStrings
     />
+    <SubmitButton active={props.newEvent.id.length > 0} type="submit" value="次へ" />
   </Fragment>
-)
+);
 
 class NewEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
+      buttonActive: false,
+      pagination: 0,
       newEvent: {
         name: '',
         id: '',
@@ -53,7 +58,7 @@ class NewEvent extends Component {
     this.setState(prevState => {
       const newState = prevState;
 
-      newState.active = target.value.length > 0 ? true : false;
+      newState.buttonActive = target.value.length > 0 ? true : false;
       newState.newEvent.name = target.value;
       return newState;
     });
@@ -64,30 +69,57 @@ class NewEvent extends Component {
     this.setState(prevState => {
       const newState = prevState;
 
-      newState.active = target.value.length > 0 ? true : false;
+      newState.buttonActive = target.value.length > 0 ? true : false;
       newState.newEvent.id = target.value;
       return newState;
     });
   };
 
   handleSubmit = event => {
-    if (this.state.active) {
-      console.log('next');
+    if (this.state.buttonActive) {
+      this.setState(prevState => ({
+        buttonActive: false,
+        pagination: prevState.pagination + 1,
+      }));
     }
     event.preventDefault();
   };
+
+  paginationBack = () => {
+    if (this.state.pagination > 0)
+      this.setState(prevState => ({ pagination: prevState.pagination - 1 }));
+  };
+
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(
+      'componentDidUpdate',
+      'prevProps',
+      prevProps,
+      'prevState',
+      prevState,
+      'snapshot',
+      snapshot,
+    );
+  }
 
   render() {
     return (
       <div className="new-app">
         <InputContainer>
           <form onSubmit={this.handleSubmit}>
-            {/*<NewEventName {...this.state} handleChangeName={this.handleChangeName}/>*/}
-
-            <NewEventId {...this.state} handleChange={this.handleChangeId}/>
-
-
-            <SubmitButton active={this.state.active} type="submit" value="次へ" />
+            {this.state.pagination == 0 ? (
+              <NewEventName {...this.state} handleChange={this.handleChangeName} />
+            ) : this.state.pagination == 1 ? (
+              <NewEventId {...this.state} handleChange={this.handleChangeId} />
+            ) : null}
           </form>
         </InputContainer>
       </div>
