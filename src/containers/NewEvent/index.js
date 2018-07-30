@@ -39,6 +39,57 @@ const NewEventId = props => (
   </Fragment>
 );
 
+const NewEventDate = props => (
+  <Fragment>
+    <InputTitle>開催日時を設定</InputTitle>
+    <Input
+      name="date"
+      type="text"
+      value={props.newEvent.date}
+      onChange={props.handleChange}
+      placeholder="2018.08.22 14:00"
+      autoFocus={true}
+    />
+  <SubmitButton active={props.newEvent.date.length > 0} type="submit" value="次へ" />
+  </Fragment>
+);
+
+const NewEventLocation = props => (
+  <Fragment>
+    <InputTitle>開催場所を設定</InputTitle>
+    <Input
+      name="date"
+      type="text"
+      value={props.newEvent.location}
+      onChange={props.handleChange}
+      placeholder="渋谷区宇田川5-5 焼き肉ビル"
+      autoFocus={true}
+    />
+  <SubmitButton active={props.newEvent.location.length > 0} type="submit" value="次へ" />
+  </Fragment>
+);
+
+const NewEventSuccess = props => (
+  <Fragment>
+    <tr>
+      <th>name</th>
+      <td>{props.name}</td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td>{props.id}</td>
+    </tr>
+    <tr>
+      <th>date</th>
+      <td>{props.date}</td>
+    </tr>
+    <tr>
+      <th>location</th>
+      <td>{props.location}</td>
+    </tr>
+  </Fragment>
+);
+
 class NewEvent extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +100,7 @@ class NewEvent extends Component {
         name: '',
         id: '',
         date: '',
+        location: '',
       },
     };
   }
@@ -71,6 +123,28 @@ class NewEvent extends Component {
 
       newState.buttonActive = target.value.length > 0 ? true : false;
       newState.newEvent.id = target.value;
+      return newState;
+    });
+  };
+
+  handleChangeDate = event => {
+    const target = event.target;
+    this.setState(prevState => {
+      const newState = prevState;
+
+      newState.buttonActive = target.value.length > 0 ? true : false;
+      newState.newEvent.date = target.value;
+      return newState;
+    });
+  };
+
+  handleChangeLocation = event => {
+    const target = event.target;
+    this.setState(prevState => {
+      const newState = prevState;
+
+      newState.buttonActive = target.value.length > 0 ? true : false;
+      newState.newEvent.location = target.value;
       return newState;
     });
   };
@@ -119,6 +193,12 @@ class NewEvent extends Component {
               <NewEventName {...this.state} handleChange={this.handleChangeName} />
             ) : this.state.pagination == 1 ? (
               <NewEventId {...this.state} handleChange={this.handleChangeId} />
+            ) : this.state.pagination == 2 ? (
+              <NewEventDate {...this.state} handleChange={this.handleChangeDate} />
+            ) : this.state.pagination == 3 ? (
+              <NewEventLocation {...this.state} handleChange={this.handleChangeLocation} />
+            ) : this.state.pagination == 4 ? (
+              <NewEventSuccess {...this.state.newEvent} />
             ) : null}
           </form>
         </InputContainer>
